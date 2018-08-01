@@ -111,6 +111,11 @@ var upltva = upltva || {
         jsb.reflection.callStaticMethod(classJavaName, "onBackPressed", "()V");
     },
 
+    setAndroidCustomerId : function(androidid) {
+        // cc.log("===> js call setAndroidCustomerId() " + (androidid));
+        jsb.reflection.callStaticMethod(classJavaName, "setCustomerIdForJs", "(Ljava/lang/String;)V", androidid);
+    },
+
     updateAndroidAccessPrivacyInfoStatus : function(gdprPermissionEnumValue) {
         jsb.reflection.callStaticMethod(classJavaName, "updateAccessPrivacyInfoStatus", "(I)V", gdprPermissionEnumValue);
     },

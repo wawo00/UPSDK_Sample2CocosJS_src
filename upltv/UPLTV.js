@@ -1,5 +1,5 @@
 
-var isShowLog = true;
+var isShowLog = false;
 
 var printLog = function(msg) {
     // cc.log("===> js call printJsLog() " + (upltv));
@@ -911,7 +911,7 @@ var upltv = upltv || {
         }
     },
 
-    setTopBannerPading : function(padding) {
+    setTopBannerPadingForIphoneX : function(padding) {
         if (undefined != this.upltvbridge && this.upltvbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
                 this.upltvbridge.setIosTopBannerPading(padding);
@@ -1020,6 +1020,26 @@ var upltv = upltv || {
         }
     },
 
+    // 向统计包的传递CustomerId(仅Android支持，对于非GP的包，可以传androidid)
+    // Version 3004(subversion 5) and above support this method
+    setCustomerId : function(androidid) {
+        loadJsBridgeObject();
+    
+        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+            if (cc.sys.os === cc.sys.OS_ANDROID) {
+                if (undefined == androidid || null == androidid) {
+                    printLog("===> setCustomerId(), the anroidid can't be null");
+                    return;
+                }
+                
+                this.upltvbridge.setAndroidCustomerId(androidid);
+            }
+            else if (cc.sys.os === cc.sys.OS_IOS) {
+                
+            }
+        }
+    },
+
     // 设置激退出广告回调接口，用于监听退出广告的在某次展示时如打开，点击，关闭等事件回调
     // 展示接口的引用会被内部保存，不会释放
     // 回调接口功能顺序：广告展示回调，点击回调，退出回调，更多广告回调，取消回调
@@ -1119,16 +1139,12 @@ var upltv = upltv || {
         }
         
         if (undefined != this.upltvbridge && this.upltvbridge != null) {
-             printLog("===> js, the callback  is a function.");
-            
             upltv.GDPRPermissionEnum.functionId = upltv.GDPRPermissionEnum.functionId + 1;
             var callId = upltv.GDPRPermissionEnum.functionId;
             var key = "" + callId;
             ltvMap.put(key, callback);
             var call = "upltv.GDPRPermissionEnum.javaCall";
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                 printLog("===> js,will call notifyAndroidAccessPrivacyInfoStatus");
-            
                 this.upltvbridge.notifyAndroidAccessPrivacyInfoStatus(call, callId);
             }
             else if (cc.sys.os === cc.sys.OS_IOS) {

@@ -1,6 +1,7 @@
+
 var HelloWorldLayer = cc.Layer.extend({
-    sprite: null,
-    ctor: function() {
+    sprite:null,
+    ctor:function () {
         //////////////////////////////
         // 1. super init first
         this._super();
@@ -10,7 +11,8 @@ var HelloWorldLayer = cc.Layer.extend({
         //    you may modify it.
         // ask the window size
         var size = cc.winSize;
-        size.wi cc.log("===> js size wd: %d", size.width);
+        size.wi
+        cc.log("===> js size wd: %d", size.width);
         cc.log("===> js size ht: %d", size.height);
         /////////////////////////////
         // 3. add your codes below...
@@ -21,16 +23,16 @@ var HelloWorldLayer = cc.Layer.extend({
         var offtop = 16;
         // position the label on the center of the screen
         helloLabel.x = size.width / 2;
-        helloLabel.y = offtop;
+        helloLabel.y =  offtop;
         // add the label as a child to this layer
         this.addChild(helloLabel, 1);
         // add "HelloWorld" splash screen"
         this.sprite = new cc.Sprite(res.HelloWorld_png);
-
+        
         this.sprite.attr({
             x: size.width / 2,
             y: 32,
-            anchorX: 0.5,
+            anchorX: 0.5,  
             anchorY: 0.0
         });
         this.addChild(this.sprite, 0);
@@ -40,119 +42,111 @@ var HelloWorldLayer = cc.Layer.extend({
 
         var x = left;
         var y = top;
-
+        
         var distHt = 90;
         var disWd = 185;
         // add button for test
         var initSdkButton = this.createButton(x, y, "initSdk");
-        initSdkButton.addTouchEventListener(function(sender, type) {
+        initSdkButton.addTouchEventListener(function(sender, type){
             cc.log("===> js initSdkButton action: %d", type);
             if (type == 2) {
+                upltv.setCustomerId("666666");
                 upltv.intSdk(0);
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var initSdkButton2 = this.createButton(x, y, "initSdkCall");
-        initSdkButton2.addTouchEventListener(function(sender, type) {
+        initSdkButton2.addTouchEventListener(function(sender, type){
             cc.log("===> js initSdkButton2 action: %d", type);
             if (type == 2) {
-                upltv.intSdk(0,
-                function(r) {
-                    cc.log("===> js intSdk result:, %s", r);
-                });
+                
+                upltv.intSdk(0, function(r){cc.log("===> js intSdk result:, %s", r);});
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var initAbButton = this.createButton(x, y, "initABTest");
-        initAbButton.addTouchEventListener(function(sender, type) {
+        initAbButton.addTouchEventListener(function(sender, type){
             cc.log("===> js initAbButton action: %d", type);
             if (type == 2) {
                 upltv.initAbtConfigJson("u89731", true, 0, "Facebook", "M", -1, ["This is the first element.", "The second one.", "The last one."]);
             }
-        },
-        this);
-
+        }, this);
+        
         y -= distHt;
         var getAbButton = this.createButton(x, y, "getABConfig");
-        getAbButton.addTouchEventListener(function(sender, type) {
+        getAbButton.addTouchEventListener(function(sender, type){
             cc.log("===> js getABConfig action: %d", type);
             if (type == 2) {
                 var r = upltv.getAbtConfig("pass");
                 cc.log("===> js getAbtConfig rr 3333: %s", r);
             }
-        },
-        this);
+        }, this);
 
         // 第二行
         x = left + disWd;
         y = top;
 
         var showRdUIButton = this.createButton(x, y, "rdDebugUI");
-        showRdUIButton.addTouchEventListener(function(sender, type) {
+        showRdUIButton.addTouchEventListener(function(sender, type){
             cc.log("===> js showRewardDebugUI action: %d", type);
             if (type == 2) {
                 upltv.showRewardDebugUI();
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var rdLoadCallButton = this.createButton(x, y, "rdLoadCall");
-        rdLoadCallButton.addTouchEventListener(function(sender, type) {
+        rdLoadCallButton.addTouchEventListener(function(sender, type){
             cc.log("===> js setRewardVideoLoadCallback action: %d", type);
             if (type == 2) {
-                upltv.setRewardVideoLoadCallback(function(cpid, msg) {
+                upltv.setRewardVideoLoadCallback(function(cpid, msg){
                     cc.log("===> js RewardVideo LoadCallback Success at: %s", cpid);
-                },
-                function(cpid, msg) {
+                }, function(cpid, msg){
                     cc.log("===> js RewardVideo LoadCallback Fail at: %s", cpid);
                 });
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var rdShowCallButton = this.createButton(x, y, "rdShowCall");
-        rdShowCallButton.addTouchEventListener(function(sender, type) {
+        rdShowCallButton.addTouchEventListener(function(sender, type){
             cc.log("===> js setRewardVideoShowCallback action: %d", type);
             if (type == 2) {
-                upltv.setRewardVideoShowCallback(function(type, cpid) {
+                upltv.setRewardVideoShowCallback(function(type, cpid){
                     var event = "unkown";
                     if (type == upltv.AdEventType.VIDEO_EVENT_DID_SHOW) {
                         event = "Did_Show";
-                    } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_CLICK) {
+                    }
+                    else if (type == upltv.AdEventType.VIDEO_EVENT_DID_CLICK) {
                         event = "Did_Click";
-                    } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_CLOSE) {
+                    }
+                    else if (type == upltv.AdEventType.VIDEO_EVENT_DID_CLOSE) {
                         event = "Did_Close";
-                    } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD) {
+                    }else if (type == upltv.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD) {
                         event = "Did_Given_Reward";
-                    } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD) {
+                    }else if (type == upltv.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD) {
                         event = "Did_Abandon_Reward";
                     }
                     cc.log("===> js RewardVideo Show Callback, event: %s, at: %s", event, cpid);
                 });
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var readyRdUIButton = this.createButton(x, y, "rdReady");
-        readyRdUIButton.addTouchEventListener(function(sender, type) {
+        readyRdUIButton.addTouchEventListener(function(sender, type){
             cc.log("===> js isRewardReady action: %d", type);
             if (type == 2) {
                 var r = upltv.isRewardReady();
                 cc.log("===> js isRewardReady r: %s", r.toString());
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var showRdUIButton = this.createButton(x, y, "rdShow");
-        showRdUIButton.addTouchEventListener(function(sender, type) {
+        showRdUIButton.addTouchEventListener(function(sender, type){
             cc.log("===> js showRewardVideo action: %d", type);
             if (type == 2) {
                 var r = upltv.isRewardReady();
@@ -162,11 +156,11 @@ var HelloWorldLayer = cc.Layer.extend({
                     upltv.showRewardVideo();
                 }
             }
-        },
-        this);
+        }, this);
 
         // 第三列插屏广告
-        x = left + disWd * 2;
+
+        x = left + disWd*2;
         y = top;
         //var cpPlaceId = "inter_aaa";
         var cpPlaceId = "inter_aaa";
@@ -177,8 +171,7 @@ var HelloWorldLayer = cc.Layer.extend({
             if (type == 2) {
                 upltv.showInterstitialDebugUI();
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var ilLoadCallUIButton = this.createButton(x, y, "ilLoadCall");
@@ -186,50 +179,50 @@ var HelloWorldLayer = cc.Layer.extend({
             cc.log("===> js setInterstitialLoadCallback action: %d", type);
             if (type == 2) {
                 upltv.setInterstitialLoadCallback(cpPlaceId,
-                function(cpid, msg) {
-                    cc.log("===> js il load callback success: %s at placementid:%s", msg, cpid);
-                },
-                function(cpid, msg) {
-                    cc.log("===> js il load callback fail: %s at placementid:%s", msg, cpid);
-                });
+                    function(cpid, msg){
+                        cc.log("===> js il load callback success: %s at placementid:%s", msg, cpid);
+                     }, 
+                    function(cpid, msg){
+                        cc.log("===> js il load callback fail: %s at placementid:%s", msg, cpid);
+                    });
             }
-        },
-        this);
+        }, this);
 
+        
         y -= distHt;
         var ilShowCallUIButton = this.createButton(x, y, "ilShowCall");
         ilShowCallUIButton.addTouchEventListener(function(sender, type) {
             cc.log("===> js setInterstitialShowCallback action: %d", type);
             if (type == 2) {
-                upltv.setInterstitialShowCallback(cpPlaceId,
-                function(type, cpid) {
-                    var event = "unkown";
-                    if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_SHOW) {
-                        event = "Did_Show";
-                    } else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLICK) {
-                        event = "Did_Click";
-                    } else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE) {
-                        event = "Did_Close";
+                upltv.setInterstitialShowCallback(cpPlaceId, 
+                    function(type, cpid){
+                        var event = "unkown";
+                        if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_SHOW) {
+                            event = "Did_Show";
+                        }
+                        else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLICK) {
+                            event = "Did_Click";
+                        }
+                        else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE) {
+                            event = "Did_Close";
+                        }
+                        cc.log("===> js il ad event: %s, at placementid: %s", event, cpid);
                     }
-                    cc.log("===> js il ad event: %s, at placementid: %s", event, cpid);
-                });
+                );
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var ilReadyAsynUIButton = this.createButton(x, y, "ilReadyAsyn");
         ilReadyAsynUIButton.addTouchEventListener(function(sender, type) {
             //cc.log("===> js isInterstitialReadyAsyn action: %d", type);
             if (type == 2) {
-                upltv.isInterstitialReadyAsyn(cpPlaceId,
-                function(r) {
+                upltv.isInterstitialReadyAsyn(cpPlaceId, function(r){
                     cc.log("===> js il ad isreadyasyn: %s at placementid:%s", r, cpPlaceId);
                 });
             }
-        },
-        this);
-
+        }, this);
+ 
         y -= distHt;
         var ilShowUIButton = this.createButton(x, y, "ilShow");
         ilShowUIButton.addTouchEventListener(function(sender, type) {
@@ -240,13 +233,12 @@ var HelloWorldLayer = cc.Layer.extend({
                 if (r == true) {
                     upltv.showInterstitialAd(cpPlaceId);
                 }
-
+                
             }
-        },
-        this);
+        }, this);
 
         //第四列
-        x = left + disWd * 3;
+        x = left + disWd*3;
         y = top;
 
         var bottomCpId = "banner_bbb";
@@ -260,20 +252,24 @@ var HelloWorldLayer = cc.Layer.extend({
                     var event = "unkown";
                     if (type == upltv.AdEventType.BANNER_EVENT_DID_SHOW) {
                         event = "Did_Show";
-                    } else if (type == upltv.AdEventType.BANNER_EVENT_DID_CLICK) {
+                    }
+                    else if (type == upltv.AdEventType.BANNER_EVENT_DID_CLICK) {
                         event = "Did_Click";
-                    } else if (type == upltv.AdEventType.BANNER_EVENT_DID_REMOVED) {
+                    }
+                    else if (type == upltv.AdEventType.BANNER_EVENT_DID_REMOVED) {
                         event = "Did_Removed";
                     }
-                    cc.log("=====> banner event: %s, at : %s", event, cpadid);
+                    cc.log("=====> banner event: %s, at : %s" , event, cpadid);
                 };
+        
+           
+                upltv.setBannerShowCallback(topCpId, 
+                    bannerCall);
 
-                upltv.setBannerShowCallback(topCpId, bannerCall);
-
-                upltv.setBannerShowCallback(bottomCpId, bannerCall);
+                upltv.setBannerShowCallback(bottomCpId, 
+                    bannerCall);
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var bnTopButton = this.createButton(x, y, "TopBNShow");
@@ -283,29 +279,26 @@ var HelloWorldLayer = cc.Layer.extend({
                 upltv.setTopBannerPading(50);
                 upltv.showBannerAdAtTop(topCpId);
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var bnBottomButton = this.createButton(x, y, "BottomBNShow");
         bnBottomButton.addTouchEventListener(function(sender, type) {
             //cc.log("===> js showBannerAdAtTop action: %d", type);
             if (type == 2) {
-                upltv.showBannerAdAtBottom(bottomCpId);
+                upltv.showBannerAdAtBottom(bottomCpId);  
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var bnHideButton = this.createButton(x, y, "hideAllBN");
         bnHideButton.addTouchEventListener(function(sender, type) {
             //cc.log("===> js showBannerAdAtTop action: %d", type);
             if (type == 2) {
-                upltv.hideBannerAdAtTop();
+                upltv.hideBannerAdAtTop(); 
                 upltv.hideBannerAdAtBottom();
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var bnRemoveButton = this.createButton(x, y, "removeAllBn");
@@ -313,13 +306,12 @@ var HelloWorldLayer = cc.Layer.extend({
             //cc.log("===> js showBannerAdAtTop action: %d", type);
             if (type == 2) {
                 upltv.removeBannerAdAt(topCpId);
-                upltv.removeBannerAdAt(bottomCpId);
+                upltv.removeBannerAdAt(bottomCpId);  
             }
-        },
-        this);
+        }, this);
 
         // 第五行
-        x = left + disWd * 4;
+        x = left + disWd*4;
         y = top;
         //onBackPressed setManifestPackageName
         var setPkgButton = this.createButton(x, y, "setPkg");
@@ -327,8 +319,7 @@ var HelloWorldLayer = cc.Layer.extend({
             if (type == 2) {
                 upltv.setManifestPackageName("com.js.test");
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var onBackButton = this.createButton(x, y, "onBackPressed");
@@ -338,22 +329,25 @@ var HelloWorldLayer = cc.Layer.extend({
                     var event = "unkown";
                     if (type == upltv.AdEventType.EXITAD_EVENT_DID_SHOW) {
                         event = "Did_Show";
-                    } else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CLICK) {
+                    }
+                    else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CLICK) {
                         event = "Did_Click";
-                    } else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CLICKMORE) {
+                    }
+                    else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CLICKMORE) {
                         event = "Did_Click_More";
-                    } else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CLICKMORE) {
+                    }
+                    else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CLICKMORE) {
                         event = "Did_Click_More";
-                    } else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CANCEL) {
+                    }
+                    else if (type == upltv.AdEventType.EXITAD_EVENT_DID_CANCEL) {
                         event = "Did_Cancel";
                     }
                     cc.log("=====> exit ad event: %s, at : %s", event, cpadid);
                 });
-
-                upltv.onBackPressed();
+                
+             upltv.onBackPressed();
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var loadManualButton = this.createButton(x, y, "loadByManual");
@@ -362,8 +356,7 @@ var HelloWorldLayer = cc.Layer.extend({
             if (type == 2) {
                 upltv.loadAdsByManual();
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var exitAppButton = this.createButton(x, y, "exitApp");
@@ -372,56 +365,46 @@ var HelloWorldLayer = cc.Layer.extend({
             if (type == 2) {
                 upltv.exitApp();
             }
-        },
-        this);
+        }, this);
 
         y -= distHt;
         var exitAppButton = this.createButton(x, y, "GDPR");
-
         exitAppButton.addTouchEventListener(function(sender, type) {
             //cc.log("===> js showBannerAdAtTop action: %d", type);
             if (type == 2) {
                 var e = upltv.getAccessPrivacyInfoStatus();
                 cc.log("===> js getAccessPrivacyInfoStatus : %d", e);
-                if (e == upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown) {
-                    // 先定位用户是否是欧盟地区
-                    upltv.isEuropeanUnionUser(function(result) {
-                        cc.log("=====> js europeanUnionUserCallBack result: " + result)
-                        // result: "true" 表示欧盟地区用户，否则非欧盟地区用户
-                        if (result == "true") {
-                            // 弹出系统弹窗询问
-                            upltv.notifyAccessPrivacyInfoStatus(function(value) {
-                                cc.log("=====> js notifyAccessPrivacyInfoStatusCallBack callback: %d ", value);
-                                upltv.intSdk(0);
-                            });
-                        } else {
-                            // 非欧盟地区用户，直接初始化SDK
-                            // 假定发行地区是海外，且不需要回调
-                            upltv.intSdk(0);
-                        }
-
-                    });
-                } else {
-                    // 假定发行地区是海外，且不需要回调
-                    upltv.intSdk(0);
+                if (e != upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown) {
+                    var ee = upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown;
+                    cc.log("===> js updateAccessPrivacyInfoStatus to : %d", ee);
+                    upltv.updateAccessPrivacyInfoStatus(ee);
+                    //
                 }
-
+                upltv.updateAccessPrivacyInfoStatus(upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted);
+                cc.log("===> js call notifyAccessPrivacyInfoStatus()");
+                upltv.notifyAccessPrivacyInfoStatus(function(result){
+                    cc.log("===> js notifyAccessPrivacyInfoStatus result: %d", result);
+                });
+                upltv.isEuropeanUnionUser(function(r) {
+                    cc.log("===> js isEuropeanUnionUser result: %s", r);
+                });
             }
-        },
-        this);
+        }, this);
 
         return true;
     },
+
 
     createButton: function(left, top, text) {
         var normalImage = "res/feedback.png";
         var pressedImage = "res/feedback_active.png";
         var button = new ccui.Button();
         button.loadTextures(normalImage, pressedImage);
-        button.setText button.attr({
+        button.setText
+        button.attr({
             x: left,
             y: top,
-            anchorX: 0.0,
+            anchorX: 0.0,  
             anchorY: 1.0
         });
         button.setTitleText(text);
@@ -430,12 +413,14 @@ var HelloWorldLayer = cc.Layer.extend({
         return button;
     }
 
+    
 });
 
 var HelloWorldScene = cc.Scene.extend({
-    onEnter: function() {
+    onEnter:function () {
         this._super();
         var layer = new HelloWorldLayer();
         this.addChild(layer);
     }
 });
+
