@@ -130,5 +130,60 @@ var upltva = upltva || {
 
     isAndroidEuropeanUnionUser : function(callback, callId) {
         jsb.reflection.callStaticMethod(classJavaName, "isEuropeanUnionUser", "(Ljava/lang/String;I)V", callback, callId);
+    },
+
+    reportIvokePluginMethodReceive : function(msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "reportIvokePluginMethodReceive", "(Ljava/lang/String;)V", msg);
+    },
+
+    reportRDRewardClose : function(msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "reportRDRewardClose", "(Ljava/lang/String;)V", msg);
+    },
+
+    reportRDRewardClick : function(msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "reportRDRewardClick", "(Ljava/lang/String;)V", msg);
+    },
+
+    reportRDRewardGiven : function(msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "reportRDRewardGiven", "(Ljava/lang/String;)V", msg);
+    },
+
+    reportRDShowDid : function(msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "reportRDShowDid", "(Ljava/lang/String;)V", msg);
+    },
+
+    reportRDRewardCancel : function(msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "reportRDRewardCancel", "(Ljava/lang/String;)V", msg);
+    },
+
+    reportILClose : function(msg, cpid) {
+        jsb.reflection.callStaticMethod(classJavaName,
+                        "reportILClose", 
+                        "(Ljava/lang/String;Ljava/lang/String;)V", 
+                        cpid == undefined?"":cpid, 
+                        msg);
+    },
+
+    reportILClick : function(msg, cpid) {
+        jsb.reflection.callStaticMethod(classJavaName,
+                        "reportILClick", 
+                        "(Ljava/lang/String;Ljava/lang/String;)V", 
+                        cpid == undefined?"":cpid, 
+                        msg);
+    },
+
+
+    reportILShowDid : function(msg, cpid) {
+        jsb.reflection.callStaticMethod(classJavaName,
+                        "reportILShowDid", 
+                        "(Ljava/lang/String;Ljava/lang/String;)V", 
+                        cpid == undefined?"":cpid, 
+                        msg);
+    },
+
+    isOnlineDebugReportEnable : function() {
+        return jsb.reflection.callStaticMethod(classJavaName,
+            "isReportOnlineEnable", 
+            "()Z");
     }
 };

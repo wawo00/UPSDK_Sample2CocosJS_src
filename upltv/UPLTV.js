@@ -14,6 +14,26 @@ var printLog = function(msg) {
     }
 };
 
+var isOnlineReportEnable = function() {
+    if (upltv != undefined) {
+        return upltv.isOnlineDebugReportEnable();
+    }
+    else {
+        return false;
+    }
+}
+
+var onlineReportCall = function(name, msg, cpid) {
+    if (upltv != undefined) {
+        if (cpid != undefined) {
+            upltv.onlineDebugReport(name, msg, cpid);
+        }
+        else {
+            upltv.onlineDebugReport(name, msg);
+        }
+    }
+}
+
 var functionNames = {
 
     handleVokeParams : function(params) {
@@ -58,6 +78,12 @@ var functionNames = {
             printLog("===> js handleVokeParams   cpadid: " + cpadid);
             printLog("===> js handleVokeParams  message: " + message);
         }
+        //cc.log("===> js onlineDebugReport before function : %s", callname);
+        var canreport = isOnlineReportEnable();
+        if (canreport) {
+            onlineReportCall(functionNames.Function_Receive_Callback, 
+                "CocosJs Receive message, callname:"+callname+", cpadid:"+cpadid);
+        }
 
         if (functionNames.Function_Reward_DidLoadFail == callname) {
             if (null != ltvMap.rewardLoadFailCall && typeof ltvMap.rewardLoadFailCall == "function") {
@@ -81,30 +107,69 @@ var functionNames = {
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
                 call(upltv.AdEventType.VIDEO_EVENT_DID_SHOW, cpadid);
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs did run callback on video shown event.");
+                }
+            }
+            else {
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs not run callback on video shown event.");
+                }
             }
         }
         else if (functionNames.Function_Reward_DidClick == callname) {
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
                 call(upltv.AdEventType.VIDEO_EVENT_DID_CLICK, cpadid);
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs did run callback on video clicked event.");
+                }
+            }
+            else {
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs not run callback on video clicked event.");
+                }
             }
         }
         else if (functionNames.Function_Reward_DidClose == callname) {
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
                 call(upltv.AdEventType.VIDEO_EVENT_DID_CLOSE, cpadid);
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs did run callback on video closed event.");
+                }
+            }
+            else {
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs not run callback on video closed event.");
+                }
             }
         }
         else if (functionNames.Function_Reward_DidGivien == callname) {
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
                 call(upltv.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD, cpadid);
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs did run callback on video reward given event.");
+                }
+            } else {
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs not run callback on video reward given event.");
+                }
             }
         }
         else if (functionNames.Function_Reward_DidAbandon == callname) {
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
                 call(upltv.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD, cpadid);
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs did run callback on video reward cancel event.");
+                }
+            }
+            else {
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs not run callback on video reward cancel event.");
+                }
             }
         }
         else if (functionNames.Function_Interstitial_DidLoadFail == callname) {
@@ -113,7 +178,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.interstitialLoadFailCall;
                 if (null != call && typeof call == "function") {
-                    call(cpadid, message);
+                    call(cpadid, message); 
                 }
                 ltvMap.remove(k);
                 printLog("===> Interstitial_DidLoadFail at key:" + k);
@@ -137,29 +202,53 @@ var functionNames = {
         }
         else if (functionNames.Function_Interstitial_Didshow == callname) {
             var v = ltvMap.get(cpadid);
+            var callReport = false;
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
                     call(upltv.AdEventType.INTERSTITIAL_EVENT_DID_SHOW, cpadid);
+                    if (canreport) {
+                        callReport = true;
+                        onlineReportCall(callname, "CocosJs did run callback on il ad shown event at " + cpadid, cpadid);
+                    }
                 }
+            }
+            if (canreport && callReport == false) {
+                onlineReportCall(callname, "CocosJs not run callback on il ad shown event at " + cpadid, cpadid);
             }
         }
         else if (functionNames.Function_Interstitial_Didclose == callname) {
             var v = ltvMap.get(cpadid);
+            var callReport = false;
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
                     call(upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE, cpadid);
+                    if (canreport) {
+                        callReport = true;
+                        onlineReportCall(callname, "CocosJs did run callback on il ad closed event at " + cpadid, cpadid);
+                    }
                 }
+            }
+            if (canreport && callReport == false) {
+                onlineReportCall(callname, "CocosJs not run callback on il ad closed event at " + cpadid, cpadid);
             }
         }
         else if (functionNames.Function_Interstitial_Didclick == callname) {
             var v = ltvMap.get(cpadid);
+            var callReport = false;
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
                     call(upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLICK, cpadid);
-                }
+                    if (canreport) {
+                        callReport = true;
+                        onlineReportCall(callname, "CocosJs did run callback on il ad clicked event at " + cpadid, cpadid);
+                    }
+                } 
+            }
+            if (canreport && callReport == false) {
+                onlineReportCall(callname, "CocosJs not run callback on il ad clicked event at " + cpadid, cpadid);
             }
         }
         else if (functionNames.Function_Banner_DidRemove == callname) {
@@ -227,6 +316,7 @@ var functionNames = {
         }
     }
 };
+functionNames.Function_Receive_Callback    = "receive_callback";
 
 functionNames.Function_Reward_DidOpen    = "reward_didopen";
 functionNames.Function_Reward_DidClick   = "reward_didclick";
@@ -1179,6 +1269,50 @@ var upltv = upltv || {
             else if (cc.sys.os === cc.sys.OS_IOS) {
                 this.upltvbridge.isIosEuropeanUnionUser(call, key);
             }
+        }
+    },
+
+    isOnlineDebugReportEnable : function() {
+        if (cc.sys.os === cc.sys.OS_ANDROID 
+            || cc.sys.os === cc.sys.OS_IOS) {
+            return this.upltvbridge.isOnlineDebugReportEnable();
+        }
+        else {
+            return false;
+        }
+    },
+
+    onlineDebugReport : function(callname, msg, cpid) {
+        if (cc.sys.os === cc.sys.OS_ANDROID 
+            || cc.sys.os === cc.sys.OS_IOS) {
+                //cc.log("===> js onlineDebugReport function : %s", callname);
+                if (functionNames.Function_Receive_Callback == callname) {
+                    this.upltvbridge.reportIvokePluginMethodReceive(msg);
+                }
+                else if (functionNames.Function_Reward_DidOpen == callname) {
+                    this.upltvbridge.reportRDShowDid(msg);
+                }
+                else if (functionNames.Function_Reward_DidClick == callname) {
+                    this.upltvbridge.reportRDRewardClick(msg);
+                }
+                else if (functionNames.Function_Reward_DidClose == callname) {
+                    this.upltvbridge.reportRDRewardClose(msg);
+                }
+                else if (functionNames.Function_Reward_DidGivien == callname) {
+                    this.upltvbridge.reportRDRewardGiven(msg);
+                }
+                else if (functionNames.Function_Reward_DidAbandon == callname) {
+                    this.upltvbridge.reportRDRewardCancel(msg);
+                }
+                else if (functionNames.Function_Interstitial_Didshow == callname) {
+                    this.upltvbridge.reportILShowDid(msg, cpid);
+                }
+                else if (functionNames.Function_Interstitial_Didclick == callname) {
+                    this.upltvbridge.reportILClick(msg, cpid);
+                }
+                else if (functionNames.Function_Interstitial_Didclose == callname) {
+                    this.upltvbridge.reportILClose(msg, cpid);
+                }
         }
     }
     

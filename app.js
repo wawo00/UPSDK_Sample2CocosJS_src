@@ -50,7 +50,6 @@ var HelloWorldLayer = cc.Layer.extend({
         initSdkButton.addTouchEventListener(function(sender, type){
             cc.log("===> js initSdkButton action: %d", type);
             if (type == 2) {
-                upltv.setCustomerId("666666");
                 upltv.intSdk(0);
             }
         }, this);
@@ -60,7 +59,6 @@ var HelloWorldLayer = cc.Layer.extend({
         initSdkButton2.addTouchEventListener(function(sender, type){
             cc.log("===> js initSdkButton2 action: %d", type);
             if (type == 2) {
-                
                 upltv.intSdk(0, function(r){cc.log("===> js intSdk result:, %s", r);});
             }
         }, this);
@@ -163,7 +161,7 @@ var HelloWorldLayer = cc.Layer.extend({
         x = left + disWd*2;
         y = top;
         //var cpPlaceId = "inter_aaa";
-        var cpPlaceId = "inter_aaa";
+        var cpPlaceId = "Interstitial_LevelPass";
         //var cpPlaceId = "Interstitial_GameStart";
         var ilShowUIButton = this.createButton(x, y, "ilShowUI");
         ilShowUIButton.addTouchEventListener(function(sender, type) {
@@ -241,7 +239,7 @@ var HelloWorldLayer = cc.Layer.extend({
         x = left + disWd*3;
         y = top;
 
-        var bottomCpId = "banner_bbb";
+        var bottomCpId = "BannerAd";
         var topCpId = "banner_aaa";
 
         var bnCallButton = this.createButton(x, y, "SetBNCall");
