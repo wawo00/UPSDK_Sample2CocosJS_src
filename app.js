@@ -160,8 +160,7 @@ var HelloWorldLayer = cc.Layer.extend({
 
         x = left + disWd*2;
         y = top;
-        //var cpPlaceId = "inter_aaa";
-        var cpPlaceId = "Interstitial_LevelPass";
+        var cpPlaceId = "inter_aaa";
         //var cpPlaceId = "Interstitial_GameStart";
         var ilShowUIButton = this.createButton(x, y, "ilShowUI");
         ilShowUIButton.addTouchEventListener(function(sender, type) {
