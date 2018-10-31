@@ -238,7 +238,7 @@ var HelloWorldLayer = cc.Layer.extend({
         x = left + disWd*3;
         y = top;
 
-        var bottomCpId = "BannerAd";
+        var bottomCpId = "banner_aaa";
         var topCpId = "banner_aaa";
 
         var bnCallButton = this.createButton(x, y, "SetBNCall");
