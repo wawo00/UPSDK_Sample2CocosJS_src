@@ -1,0 +1,2 @@
+# UPSDK_Sample2CocosJS_src
+里面包含UPSDK 中cocosjs需要用到的js脚本
