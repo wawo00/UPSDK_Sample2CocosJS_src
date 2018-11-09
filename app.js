@@ -44,9 +44,9 @@ var HelloWorldLayer = cc.Layer.extend({
         var y = top;
         
 
-        var bottomCpId = "sample_banner_foreign";
-        var topCpId = "sample_banner_foreign";
-        var cpPlaceId = "sample_inter_foreign";
+        var bottomCpId = "sample_banner_inland";
+        var topCpId = "sample_banner_inland";
+        var cpPlaceId = "sample_inter_inland";
         var distHt = 90;
         var disWd = 185;
         // add button for test
