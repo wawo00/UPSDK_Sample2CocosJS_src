@@ -43,6 +43,10 @@ var HelloWorldLayer = cc.Layer.extend({
         var x = left;
         var y = top;
         
+
+        var bottomCpId = "sample_banner_foreign";
+        var topCpId = "sample_banner_foreign";
+        var cpPlaceId = "sample_inter_foreign";
         var distHt = 90;
         var disWd = 185;
         // add button for test
@@ -160,7 +164,7 @@ var HelloWorldLayer = cc.Layer.extend({
 
         x = left + disWd*2;
         y = top;
-        var cpPlaceId = "inter_aaa";
+        
         //var cpPlaceId = "Interstitial_GameStart";
         var ilShowUIButton = this.createButton(x, y, "ilShowUI");
         ilShowUIButton.addTouchEventListener(function(sender, type) {
@@ -238,8 +242,7 @@ var HelloWorldLayer = cc.Layer.extend({
         x = left + disWd*3;
         y = top;
 
-        var bottomCpId = "banner_aaa";
-        var topCpId = "banner_aaa";
+ 
 
         var bnCallButton = this.createButton(x, y, "SetBNCall");
         bnCallButton.addTouchEventListener(function(sender, type) {
